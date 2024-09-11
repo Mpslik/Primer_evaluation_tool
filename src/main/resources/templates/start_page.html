@@ -3,16 +3,21 @@
 <head>
     <title>Primer Evaluation Tool</title>
     <script type="text/javascript">
-        function validatePrimerInput(input) {
-            const validCharacters = /^[ATGCUatgcu]*$/;
+        // Function to validate and convert input to uppercase while typing
+        function validateAndConvertPrimerInput(input) {
+            const validCharacters = /^[ATGCUatgcu]*$/;  // Only A, T, G, C, U allowed
             const errorMessage = document.getElementById('error-message');
 
+            // Convert to uppercase
+            input.value = input.value.toUpperCase();
+
+            // Validate input
             if (!validCharacters.test(input.value)) {
                 errorMessage.textContent = "Invalid characters detected! Only A, T, G, C, U are allowed.";
                 errorMessage.style.color = "red";
                 input.style.borderColor = "red";
             } else {
-                errorMessage.textContent = "";
+                errorMessage.textContent = "";  // Clear the error message if valid
                 input.style.borderColor = "";
             }
         }
@@ -26,12 +31,12 @@
 
 <form action="#" th:action="@{/analyze}" th:object="${primerForm}" method="post">
     <label for="primer1">Primer 1:</label>
-    <input type="text" id="primer1" th:field="*{primer1}" pattern="[ATGCUatgcu]*"
-           title="Only A, T, G, C, U are allowed" oninput="validatePrimerInput(this)" required /><br>
+    <input type="text" id="primer1" th:field="*{primer1}" pattern="[ATGCU]*" title="Only A, T, G, C, U are allowed"
+           oninput="validateAndConvertPrimerInput(this)" required /><br>
 
     <label for="primer2">Primer 2:</label>
-    <input type="text" id="primer2" th:field="*{primer2}" pattern="[ATGCUatgcu]*"
-           title="Only A, T, G, C, U are allowed" oninput="validatePrimerInput(this)" required /><br>
+    <input type="text" id="primer2" th:field="*{primer2}" pattern="[ATGCU]*" title="Only A, T, G, C, U are allowed"
+           oninput="validateAndConvertPrimerInput(this)" required /><br>
 
     <button type="submit">Analyze</button>
 </form>
