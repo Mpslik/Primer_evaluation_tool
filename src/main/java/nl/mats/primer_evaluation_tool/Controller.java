@@ -26,9 +26,16 @@ public class Controller {
         String reversePrimer = primerObject.getReversePrimer();
 
         // Check if both primers are valid
-        if (!primerObject.isValidPrimer(forwardPrimer) || !primerObject.isValidPrimer(reversePrimer)) {
-            model.addAttribute("error", "Invalid primer sequence. Only A, T, G, C, U characters are allowed (case-insensitive).");
-            return "start_page"; // Return to the form with an error message
+        // Validate the forward primer
+        if (!primerObject.isValidPrimer(forwardPrimer)) {
+            model.addAttribute("error", "Invalid forward primer sequence. Only A, T, G, C, U characters are allowed.");
+            return "start_page";  // Return to the form with an error message
+        }
+
+        // Validate the reverse primer
+        if (reversePrimer != null && !reversePrimer.isEmpty() && !primerObject.isValidPrimer(reversePrimer)) {
+            model.addAttribute("error", "Invalid reverse primer sequence. Only A, T, G, C, U characters are allowed.");
+            return "start_page";  // Return to the form with an error message
         }
 
         // Perform analysis if valid
