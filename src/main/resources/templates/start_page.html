@@ -13,7 +13,7 @@
 
             // Validate input
             if (!validCharacters.test(input.value)) {
-                errorMessage.textContent = "Invalid characters detected! Only A, T, G, C, U are allowed.";
+                errorMessage.textContent = "Invalid primer characters detected! Only valid nucleotides A,T-(U),G,C allowed";
                 errorMessage.style.color = "red";
                 input.style.borderColor = "red";
             } else {
@@ -31,10 +31,12 @@
 
 <form action="#" th:action="@{/analyze}" th:object="${primerForm}" method="post">
     <label for="forward">Forward Primer:</label>
-    <input type="text" id="forward" th:field="*{forwardPrimer}" pattern="[ATGCUatgcu]*" title="Only A, T, G, C, U are allowed" required /><br>
+    <input type="text" id="forward" th:field="*{forwardPrimer}" pattern="[ATGCU]*" title="Only valid nucleotides A,T,G,C,U "
+           oninput="validateAndConvertPrimerInput(this)" required /><br>
 
-    <label for="reverse">Reverse Primer (Optional):</label>
-    <input type="text" id="reverse" th:field="*{reversePrimer}" pattern="[ATGCUatgcu]*" title="Only A, T, G, C, U are allowed" /><br>
+    <label for="reverse">Reverse Primer:</label>
+    <input type="text" id="reverse" th:field="*{reversePrimer}" pattern="[ATGCU]*" title="Only valid nucleotides A,T,G,C,U "
+           oninput="validateAndConvertPrimerInput(this)"  /><br>
 
     <button type="submit">Analyze</button>
 </form>
@@ -44,8 +46,8 @@
     <ul>
         <li th:each="analysis : ${history}">
             Primer 1: <span th:text="${analysis.primer1}"></span>,
-            G/C Content: <span th:text="${analysis.gcContent}"></span>%,
-            Melting Point: <span th:text="${analysis.meltingPoint}"></span>°C
+            G/C Content: <span th:text="${analysis.gcContentPrimer1}"></span>%,
+            Melting Point: <span th:text="${analysis.meltingPointPrimer1}"></span>°C
         </li>
     </ul>
 </div>

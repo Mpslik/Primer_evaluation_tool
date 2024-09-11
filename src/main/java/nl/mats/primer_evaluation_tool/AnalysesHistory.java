@@ -13,7 +13,7 @@ public class AnalysesHistory {
 
     // Add a new analysis to the history
     public void addAnalysis(PrimerAnalyses analysis) {
-        if (history.size() >= 10) {
+        if (history.size() >= 5) {
             history.removeFirst();  // Remove the oldest analysis if history exceeds 10
         }
         history.add(analysis);
