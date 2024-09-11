@@ -1,33 +1,33 @@
 package nl.mats.primer_evaluation_tool;
 
 public class PrimerObject {
-    private String primer1;
-    private String primer2;
+    private String forwardPrimer;
+    private String reversePrimer;
 
     // Constructor
     public PrimerObject() {
     }
 
-    public PrimerObject(String primer1, String primer2) {
-        this.primer1 = primer1;
-        this.primer2 = primer2;
+    public PrimerObject(String forwardPrimer, String reversePrimer) {
+        this.forwardPrimer = forwardPrimer;
+        this.reversePrimer = reversePrimer;
     }
 
     // Getters and setters
-    public String getPrimer1() {
-        return primer1;
+    public String getForwardPrimer() {
+        return forwardPrimer;
     }
 
-    public void setPrimer1(String primer1) {
-        this.primer1 = primer1;
+    public void setForwardPrimer(String forwardPrimer) {
+        this.forwardPrimer = forwardPrimer;
     }
 
-    public String getPrimer2() {
-        return primer2;
+    public String getReversePrimer() {
+        return reversePrimer;
     }
 
-    public void setPrimer2(String primer2) {
-        this.primer2 = primer2;
+    public void setReversePrimer(String reversePrimer) {
+        this.reversePrimer = reversePrimer;
     }
 
     // Valid primer check
@@ -37,6 +37,6 @@ public class PrimerObject {
 
     @Override
     public String toString() {
-        return primer1 + " " + primer2;
+        return forwardPrimer + " " + reversePrimer;
     }
 }

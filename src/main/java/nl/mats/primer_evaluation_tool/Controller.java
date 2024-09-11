@@ -22,17 +22,17 @@ public class Controller {
 
     @PostMapping("/analyze")
     public String analyzePrimer(@ModelAttribute PrimerObject primerObject, Model model) {
-        String primer1 = primerObject.getPrimer1();
-        String primer2 = primerObject.getPrimer2();
+        String forwardPrimer = primerObject.getForwardPrimer();
+        String reversePrimer = primerObject.getReversePrimer();
 
         // Check if both primers are valid
-        if (!primerObject.isValidPrimer(primer1) || !primerObject.isValidPrimer(primer2)) {
+        if (!primerObject.isValidPrimer(forwardPrimer) || !primerObject.isValidPrimer(reversePrimer)) {
             model.addAttribute("error", "Invalid primer sequence. Only A, T, G, C, U characters are allowed (case-insensitive).");
             return "start_page"; // Return to the form with an error message
         }
 
         // Perform analysis if valid
-        PrimerAnalyses analysisResult = new PrimerAnalyses(primer1, primer2);
+        PrimerAnalyses analysisResult = new PrimerAnalyses(forwardPrimer, reversePrimer);
 
         // Add the result to the history
         analysesHistory.addAnalysis(analysisResult);

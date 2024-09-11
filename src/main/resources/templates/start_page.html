@@ -30,13 +30,11 @@
 <p id="error-message" style="color: red;"></p>
 
 <form action="#" th:action="@{/analyze}" th:object="${primerForm}" method="post">
-    <label for="primer1">Primer 1:</label>
-    <input type="text" id="primer1" th:field="*{primer1}" pattern="[ATGCU]*" title="Only A, T, G, C, U are allowed"
-           oninput="validateAndConvertPrimerInput(this)" required /><br>
+    <label for="forward">Forward Primer:</label>
+    <input type="text" id="forward" th:field="*{forwardPrimer}" pattern="[ATGCUatgcu]*" title="Only A, T, G, C, U are allowed" required /><br>
 
-    <label for="primer2">Primer 2:</label>
-    <input type="text" id="primer2" th:field="*{primer2}" pattern="[ATGCU]*" title="Only A, T, G, C, U are allowed"
-           oninput="validateAndConvertPrimerInput(this)" required /><br>
+    <label for="reverse">Reverse Primer (Optional):</label>
+    <input type="text" id="reverse" th:field="*{reversePrimer}" pattern="[ATGCUatgcu]*" title="Only A, T, G, C, U are allowed" /><br>
 
     <button type="submit">Analyze</button>
 </form>

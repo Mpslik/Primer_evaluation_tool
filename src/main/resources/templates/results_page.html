@@ -5,8 +5,15 @@
 </head>
 <body>
 <h1>Analysis Results</h1>
-<p>Primer 1 G/C Content: <span th:text="${analysis.gcContent}">0.0</span>%</p>
-<p>Primer 1 Melting Point: <span th:text="${analysis.meltingPoint}">0.0</span>°C</p>
+
+<h2>Primer 1</h2>
+<p>Primer 1 G/C Content: <span th:text="${analysis.gcContentPrimer1}">0.0</span>%</p>
+<p>Primer 1 Melting Point: <span th:text="${analysis.meltingPointPrimer1}">0.0</span>°C</p>
+
+<!-- Check if Primer 2 was entered -->
+<h2 th:if="${analysis.gcContentPrimer2 > 0}">Primer 2</h2>
+<p th:if="${analysis.gcContentPrimer2 > 0}">Primer 2 G/C Content: <span th:text="${analysis.gcContentPrimer2}">0.0</span>%</p>
+<p th:if="${analysis.gcContentPrimer2 > 0}">Primer 2 Melting Point: <span th:text="${analysis.meltingPointPrimer2}">0.0</span>°C</p>
 
 <a href="/">Analyze another primer</a>
 </body>
