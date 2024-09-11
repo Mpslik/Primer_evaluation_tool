@@ -1,17 +1,30 @@
-<!DOCTYPE HTML>
-<html lang="">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hello</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Primer Evaluation Tool</title>
 </head>
 <body>
+<h1>Enter Primer Sequences</h1>
+<form th:action="@{/analyze}" th:object="${primerForm}" method="post">
+    <label for="primer1">Primer 1:</label>
+    <input type="text" id="primer1" th:field="*{primer1}" /><br />
 
-<h1 th:text="${message}"></h1>
+    <label for="primer2">Primer 2 (Optional):</label>
+    <input type="text" id="primer2" th:field="*{primer2}" /><br />
 
-<p>Thymeleaf Iteration:</p>
-<ul>
-    <li th:each="item : ${items}" th:text="${item}"></li>
-</ul>
-<p th:text="'Current Year: ' + ${#dates.format(#dates.createNow(), 'yyyy')}"></p>
+    <input type="submit" value="Analyze" />
+</form>
+
+<h2>History of the Last 10 Analyses</h2>
+<div th:if="${history != null}">
+    <ul>
+        <li th:each="analysis : ${history}">
+            Primer 1: <span th:text="${analysis.primer1}"></span>,
+            G/C Content: <span th:text="${analysis.gcContent}"></span>%,
+            Melting Point: <span th:text="${analysis.meltingPoint}"></span>°C
+        </li>
+    </ul>
+</div>
 </body>
+</html>
 </html>
