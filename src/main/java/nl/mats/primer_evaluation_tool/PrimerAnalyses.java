@@ -1,6 +1,7 @@
 package nl.mats.primer_evaluation_tool;
 
 public class PrimerAnalyses {
+    private int id ;
     private String primer1;
     private String primer2;
     private double gcContentPrimer1;
@@ -9,7 +10,8 @@ public class PrimerAnalyses {
     private double meltingPointPrimer2;
 
     // Constructor
-    public PrimerAnalyses(String primer1, String primer2) {
+    public PrimerAnalyses(int id, String primer1, String primer2) {
+        this.id = id;
         this.primer1 = primer1;
         this.primer2 = primer2;
 
@@ -55,6 +57,10 @@ public class PrimerAnalyses {
             }
         }
         return count;
+    }
+    // Id getter
+    public int getId() {
+        return id;
     }
 
     // Getters for Primer 1 results

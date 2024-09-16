@@ -8,9 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AnalysesHistory {
 
-    // LinkedList to store the history (last 10 analyses)
     private final LinkedList<PrimerAnalyses> history = new LinkedList<>();
-
+    private int currentId = 1;
     // Add a new analysis to the history
     public void addAnalysis(PrimerAnalyses analysis) {
         if (history.size() >= 5) {
@@ -22,5 +21,17 @@ public class AnalysesHistory {
     // Get the current history
     public List<PrimerAnalyses> getHistory() {
         return history;
+    }
+
+    // retriever
+    public PrimerAnalyses getAnalysisById(int id) {
+        return history.stream()
+                .filter(analysis -> analysis.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public int generateNewid() {
+        return currentId++;
     }
 }

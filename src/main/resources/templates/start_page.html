@@ -41,13 +41,18 @@
     <button type="submit">Analyze</button>
 </form>
 
-<h2>History of the Last 10 Analyses</h2>
+<h2>History of the Last 5 Analyses</h2>
 <div th:if="${history != null}">
     <ul>
         <li th:each="analysis : ${history}">
-            Primer 1: <span th:text="${analysis.primer1}"></span>,
-            G/C Content: <span th:text="${analysis.gcContentPrimer1}"></span>%,
-            Melting Point: <span th:text="${analysis.meltingPointPrimer1}"></span>°C
+            <a th:href="@{/analysis/{id}(id=${analysis.id})}">
+                View Analysis: Primer 1 G/C Content: <span th:text="${analysis.gcContentPrimer1}"></span>%,
+                Melting Point: <span th:text="${analysis.meltingPointPrimer1}"></span>°C
+                <span th:if="${analysis.gcContentPrimer2 != 0}">
+                    | Primer 2 G/C Content: <span th:text="${analysis.gcContentPrimer2}"></span>%,
+                    Melting Point: <span th:text="${analysis.meltingPointPrimer2}"></span>°C
+                </span>
+            </a>
         </li>
     </ul>
 </div>

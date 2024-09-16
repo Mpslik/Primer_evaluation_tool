@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @org.springframework.stereotype.Controller
@@ -39,7 +40,8 @@ public class Controller {
         }
 
         // Perform analysis if valid
-        PrimerAnalyses analysisResult = new PrimerAnalyses(forwardPrimer, reversePrimer);
+        int newId = analysesHistory.generateNewid();
+        PrimerAnalyses analysisResult = new PrimerAnalyses(newId, forwardPrimer, reversePrimer);
 
         // Add the result to the history
         analysesHistory.addAnalysis(analysisResult);
@@ -50,4 +52,18 @@ public class Controller {
 
         return "results_page"; // Render the results page
     }
+
+    // Method to view an existing analysis by its ID
+    @GetMapping("/analysis/{id}")
+    public String viewAnalysis(@PathVariable int id, Model model) {
+        PrimerAnalyses analysis = analysesHistory.getAnalysisById(id);
+        if (analysis == null) {
+            return "error_page";  // Handle invalid IDs
+        }
+        // Add the retrieved analysis and the history to the model
+        model.addAttribute("analysis", analysis);
+        model.addAttribute("history", analysesHistory.getHistory());
+
+        return "results_page";
+}
 }
