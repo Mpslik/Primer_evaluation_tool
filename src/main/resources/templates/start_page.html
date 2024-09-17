@@ -46,11 +46,11 @@
     <ul>
         <li th:each="analysis : ${history}">
             <a th:href="@{/analysis/{id}(id=${analysis.id})}">
-                View Analysis: Primer 1 G/C Content: <span th:text="${analysis.gcContentPrimer1}"></span>%,
-                Melting Point: <span th:text="${analysis.meltingPointPrimer1}"></span>°C
-                <span th:if="${analysis.gcContentPrimer2 != 0}">
-                    | Primer 2 G/C Content: <span th:text="${analysis.gcContentPrimer2}"></span>%,
-                    Melting Point: <span th:text="${analysis.meltingPointPrimer2}"></span>°C
+                View Analysis: Primer 1 G/C Content: <span th:text="${analysis.gcContentForwardPrimer}"></span>%,
+                Melting Point: <span th:text="${analysis.meltingPointForwardPrimer}"></span>°C
+                <span th:if="${analysis.gcContentReversePrimer != 0}">
+                    | Primer 2 G/C Content: <span th:text="${analysis.gcContentReversePrimer}"></span>%,
+                    Melting Point: <span th:text="${analysis.meltingPointReversePrimer}"></span>°C
                 </span>
             </a>
         </li>

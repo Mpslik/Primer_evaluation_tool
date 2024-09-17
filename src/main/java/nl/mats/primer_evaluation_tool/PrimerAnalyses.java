@@ -2,27 +2,27 @@ package nl.mats.primer_evaluation_tool;
 
 public class PrimerAnalyses {
     private int id ;
-    private String primer1;
-    private String primer2;
-    private double gcContentPrimer1;
-    private double gcContentPrimer2;
-    private double meltingPointPrimer1;
-    private double meltingPointPrimer2;
+    private String forwardPrimer;
+    private String reversePrimer;
+    private double gcContentForwardPrimer;
+    private double gcContentReversePrimer;
+    private double meltingPointForwardPrimer;
+    private double meltingPointReversePrimer;
 
     // Constructor
-    public PrimerAnalyses(int id, String primer1, String primer2) {
+    public PrimerAnalyses(int id, String forwardPrimer, String reversePrimer) {
         this.id = id;
-        this.primer1 = primer1;
-        this.primer2 = primer2;
+        this.forwardPrimer = forwardPrimer;
+        this.reversePrimer = reversePrimer;
 
         // Analyze Primer 1
-        this.gcContentPrimer1 = calculateGCContent(primer1);
-        this.meltingPointPrimer1 = calculateMeltingPoint(primer1);
+        this.gcContentForwardPrimer = calculateGCContent(forwardPrimer);
+        this.meltingPointForwardPrimer = calculateMeltingPoint(forwardPrimer);
 
         // Analyze Primer 2 if provided (not empty or null)
-        if (primer2 != null && !primer2.isEmpty()) {
-            this.gcContentPrimer2 = calculateGCContent(primer2);
-            this.meltingPointPrimer2 = calculateMeltingPoint(primer2);
+        if (reversePrimer != null && !reversePrimer.isEmpty()) {
+            this.gcContentReversePrimer = calculateGCContent(reversePrimer);
+            this.meltingPointReversePrimer = calculateMeltingPoint(reversePrimer);
         }
     }
 
@@ -64,20 +64,20 @@ public class PrimerAnalyses {
     }
 
     // Getters for Primer 1 results
-    public double getGcContentPrimer1() {
-        return gcContentPrimer1;
+    public double getGcContentForwardPrimer() {
+        return gcContentForwardPrimer;
     }
 
-    public double getMeltingPointPrimer1() {
-        return meltingPointPrimer1;
+    public double getMeltingPointForwardPrimer() {
+        return meltingPointForwardPrimer;
     }
 
     // Getters for Primer 2 results
-    public double getGcContentPrimer2() {
-        return gcContentPrimer2;
+    public double getGcContentReversePrimer() {
+        return gcContentReversePrimer;
     }
 
-    public double getMeltingPointPrimer2() {
-        return meltingPointPrimer2;
+    public double getMeltingPointReversePrimer() {
+        return meltingPointReversePrimer;
     }
 }
