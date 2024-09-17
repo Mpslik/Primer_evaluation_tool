@@ -25,6 +25,8 @@ public class Controller {
     public String analyzePrimer(@ModelAttribute PrimerObject primerObject, Model model) {
         String forwardPrimer = primerObject.getForwardPrimer();
         String reversePrimer = primerObject.getReversePrimer();
+        String forwardPrimerName = primerObject.getForwardPrimerName();
+        String reversePrimerName = primerObject.getReversePrimerName();
 
         // Check if both primers are valid
         // Validate the forward primer
@@ -41,7 +43,7 @@ public class Controller {
 
         // Perform analysis if valid
         int newId = analysesHistory.generateNewid();
-        PrimerAnalyses analysisResult = new PrimerAnalyses(newId, forwardPrimer, reversePrimer);
+        PrimerAnalyses analysisResult = new PrimerAnalyses(newId, forwardPrimer, reversePrimer, forwardPrimerName, reversePrimerName);
 
         // Add the result to the history
         analysesHistory.addAnalysis(analysisResult);

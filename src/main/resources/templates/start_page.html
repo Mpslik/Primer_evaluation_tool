@@ -34,13 +34,15 @@
     <input type="text" id="forwardName" th:field="*{forwardPrimerName}" placeholder="Name of forward primer" required/><br>
 
     <label for="forward">Forward Primer:</label>
-    <input type="text" id="forward" th:field="*{forwardPrimer}" pattern="[ATGCUatgcu]*" title="Only A, T, G, C, U are allowed" required/><br>
+    <input type="text" id="forward" th:field="*{forwardPrimer}" pattern="[ATGC]*" title="Only A, T, G, C characters are allowed" required
+           oninput="this.value = this.value.toUpperCase();"/><br>
 
     <label for="reverseName">Reverse Primer Name (Optional):</label>
     <input type="text" id="reverseName" th:field="*{reversePrimerName}" placeholder="Name of reverse primer"/><br>
 
     <label for="reverse">Reverse Primer (Optional):</label>
-    <input type="text" id="reverse" th:field="*{reversePrimer}" pattern="[ATGCUatgcu]*" title="Only A, T, G, C, U are allowed"/><br>
+    <input type="text" id="reverse" th:field="*{reversePrimer}" pattern="[ATGC]*" title="Only A, T, G, C characters are allowed"
+           oninput="this.value = this.value.toUpperCase();"/><br>
 
     <button type="submit">Analyze</button>
 </form>
@@ -49,13 +51,11 @@
 <div th:if="${history != null}">
     <ul>
         <li th:each="analysis : ${history}">
+            <!-- Display Forward and Reverse primer names as clickable links -->
             <a th:href="@{/analysis/{id}(id=${analysis.id})}">
-                View Analysis: Primer 1 G/C Content: <span th:text="${analysis.gcContentForwardPrimer}"></span>%,
-                Melting Point: <span th:text="${analysis.meltingPointForwardPrimer}"></span>°C
-                <span th:if="${analysis.gcContentReversePrimer != 0}">
-                    | Primer 2 G/C Content: <span th:text="${analysis.gcContentReversePrimer}"></span>%,
-                    Melting Point: <span th:text="${analysis.meltingPointReversePrimer}"></span>°C
-                </span>
+                Forward Primer: <span th:text="${analysis.forwardPrimerName}">Unnamed Forward</span>
+                <!-- Only show Reverse Primer name if it exists -->
+                <span th:if="${analysis.reversePrimerName != null}"> | Reverse Primer: <span th:text="${analysis.reversePrimerName}">Unnamed Reverse</span></span>
             </a>
         </li>
     </ul>

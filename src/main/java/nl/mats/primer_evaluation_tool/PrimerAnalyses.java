@@ -4,16 +4,20 @@ public class PrimerAnalyses {
     private int id ;
     private String forwardPrimer;
     private String reversePrimer;
+    private String forwardPrimerName;
+    private String reversePrimerName;
     private double gcContentForwardPrimer;
     private double gcContentReversePrimer;
     private double meltingPointForwardPrimer;
     private double meltingPointReversePrimer;
 
     // Constructor
-    public PrimerAnalyses(int id, String forwardPrimer, String reversePrimer) {
+    public PrimerAnalyses(int id, String forwardPrimer, String reversePrimer, String forwardPrimerName, String reversePrimerName) {
         this.id = id;
         this.forwardPrimer = forwardPrimer;
         this.reversePrimer = reversePrimer;
+        this.forwardPrimerName = forwardPrimerName;
+        this.reversePrimerName = reversePrimerName;
 
         // Analyze Primer 1
         this.gcContentForwardPrimer = calculateGCContent(forwardPrimer);
@@ -63,6 +67,13 @@ public class PrimerAnalyses {
         return id;
     }
 
+    public String getForwardPrimerName() {
+        return forwardPrimerName;
+    }
+
+    public String getReversePrimerName() {
+        return reversePrimerName;
+    }
     // Getters for Primer 1 results
     public double getGcContentForwardPrimer() {
         return gcContentForwardPrimer;
