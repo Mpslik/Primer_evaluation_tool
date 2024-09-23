@@ -62,6 +62,30 @@ public class PrimerAnalyses {
         }
         return count;
     }
+
+    private int calculateMaxHomopolymerStretch(String primer) {
+        if (primer == null || primer.isEmpty()) {
+            return 0;
+        }
+
+        int maxStretch = 1;
+        int currentStretch = 1;
+
+        for (int i = 1; i < primer.length(); i++) {
+            if (primer.charAt(i) == primer.charAt(i - 1)) {
+                currentStretch++;
+            } else {
+                currentStretch = 1;
+            }
+
+            if (currentStretch > maxStretch) {
+                maxStretch = currentStretch;
+            }
+        }
+
+        return maxStretch;
+    }
+
     // Id getter
     public int getId() {
         return id;
