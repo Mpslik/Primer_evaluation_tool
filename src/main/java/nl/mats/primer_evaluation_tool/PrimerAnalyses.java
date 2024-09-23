@@ -13,6 +13,8 @@ public class PrimerAnalyses {
     private int maxHomopolymerStretchForwardPrimer;
     private int maxHomopolymerStretchReversePrimer;
     private int max3IntermolecularIdentity;
+    private int max3IntramolecularIdentityForwardPrimer;
+    private int max3IntramolecularIdentityReversePrimer;
 
 
     // Constructor
@@ -27,6 +29,7 @@ public class PrimerAnalyses {
         this.gcContentForwardPrimer = calculateGCContent(forwardPrimer);
         this.meltingPointForwardPrimer = calculateMeltingPoint(forwardPrimer);
         this.maxHomopolymerStretchForwardPrimer = calculateMaxHomopolymerStretch(forwardPrimer);
+        this.max3IntramolecularIdentityForwardPrimer = calculateMax3IntramolecularIdentity(forwardPrimer);
 
         // Analyze Primer 2 if provided (not empty or null)
         if (reversePrimer != null && !reversePrimer.isEmpty()) {
@@ -34,7 +37,9 @@ public class PrimerAnalyses {
             this.meltingPointReversePrimer = calculateMeltingPoint(reversePrimer);
             this.maxHomopolymerStretchReversePrimer = calculateMaxHomopolymerStretch(reversePrimer);
             this.max3IntermolecularIdentity = calculateMax3IntermolecularIdentity(forwardPrimer, reversePrimer);
+            this.max3IntramolecularIdentityReversePrimer = calculateMax3IntramolecularIdentity(reversePrimer);
         }
+
     }
 
     // Method to calculate G/C content
@@ -110,6 +115,24 @@ public class PrimerAnalyses {
         }
 
         return matches;
+    }
+
+    private int calculateMax3IntramolecularIdentity(String primer) {
+        if (primer == null || primer.isEmpty()) {
+            return 0;
+        }
+
+        int maxIdentity = 0;
+
+        for (int i = 0; i < primer.length() / 2; i++) {
+            if (primer.charAt(i) == primer.charAt(primer.length() - 1 - i)) {
+                maxIdentity++;
+            } else {
+                break;
+            }
+        }
+
+        return maxIdentity;
     }
 
     // Id getter
