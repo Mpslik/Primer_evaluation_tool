@@ -8,12 +8,18 @@
 <p>Forward Primer Name: <span th:text="${analysis.forwardPrimerName}">N/A</span></p>
 <p>Forward Primer  G/C Content: <span th:text="${analysis.gcContentForwardPrimer}">0.0</span>%</p>
 <p>Forward Primer Melting Point: <span th:text="${analysis.meltingPointForwardPrimer}">0.0</span>°C</p>
+<p>Forward Primer Max Homopolymer Stretch: <span th:text="${analysis.maxHomopolymerStretchForwardPrimer}">0</span></p>
+<p>Forward Primer Max 3'-Intramolecular Identity: <span th:text="${analysis.max3IntramolecularIdentityForwardPrimer}">0</span></p>
 
 <!-- If Primer 2 was provided, show its results -->
 <div th:if="${analysis.gcContentReversePrimer != 0}">
     <p>Reverse Primer Name: <span th:text="${analysis.reversePrimerName}">N/A</span></p>
-  <p>Reverse Primer G/C Content: <span th:text="${analysis.gcContentReversePrimer}">0.0</span>%</p>
-  <p>Reverse Primer Melting Point: <span th:text="${analysis.meltingPointReversePrimer}">0.0</span>°C</p>
+    <p>Reverse Primer G/C Content: <span th:text="${analysis.gcContentReversePrimer}">0.0</span>%</p>
+    <p>Reverse Primer Melting Point: <span th:text="${analysis.meltingPointReversePrimer}">0.0</span>°C</p>
+    <p>Reverse Primer Max Homopolymer Stretch: <span th:text="${analysis.maxHomopolymerStretchReversePrimer}">0</span></p>
+    <p>Max 3'-Intermolecular Identity: <span th:text="${analysis.max3IntermolecularIdentity}">0</span></p>
+    <p>Reverse Primer Max 3'-Intramolecular Identity: <span th:text="${analysis.max3IntramolecularIdentityReversePrimer}">0</span></p>
+
 </div>
 
 <h2>History of the Last 5 Analyses</h2>
