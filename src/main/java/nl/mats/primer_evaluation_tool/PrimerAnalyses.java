@@ -10,6 +10,10 @@ public class PrimerAnalyses {
     private double gcContentReversePrimer;
     private double meltingPointForwardPrimer;
     private double meltingPointReversePrimer;
+    private int maxHomopolymerStretchForwardPrimer;
+    private int maxHomopolymerStretchReversePrimer;
+    private int max3IntermolecularIdentity;
+
 
     // Constructor
     public PrimerAnalyses(int id, String forwardPrimer, String reversePrimer, String forwardPrimerName, String reversePrimerName) {
@@ -22,11 +26,14 @@ public class PrimerAnalyses {
         // Analyze Primer 1
         this.gcContentForwardPrimer = calculateGCContent(forwardPrimer);
         this.meltingPointForwardPrimer = calculateMeltingPoint(forwardPrimer);
+        this.maxHomopolymerStretchForwardPrimer = calculateMaxHomopolymerStretch(forwardPrimer);
 
         // Analyze Primer 2 if provided (not empty or null)
         if (reversePrimer != null && !reversePrimer.isEmpty()) {
             this.gcContentReversePrimer = calculateGCContent(reversePrimer);
             this.meltingPointReversePrimer = calculateMeltingPoint(reversePrimer);
+            this.maxHomopolymerStretchReversePrimer = calculateMaxHomopolymerStretch(reversePrimer);
+            this.max3IntermolecularIdentity = calculateMax3IntermolecularIdentity(forwardPrimer, reversePrimer);
         }
     }
 
@@ -84,6 +91,25 @@ public class PrimerAnalyses {
         }
 
         return maxStretch;
+    }
+
+    private int calculateMax3IntermolecularIdentity(String primer1, String primer2) {
+        if (primer1 == null || primer2 == null || primer1.isEmpty() || primer2.isEmpty()) {
+            return 0;
+        }
+
+        int minLength = Math.min(primer1.length(), primer2.length());
+        int matches = 0;
+
+        for (int i = 0; i < minLength; i++) {
+            if (primer1.charAt(primer1.length() - 1 - i) == primer2.charAt(primer2.length() - 1 - i)) {
+                matches++;
+            } else {
+                break;
+            }
+        }
+
+        return matches;
     }
 
     // Id getter
