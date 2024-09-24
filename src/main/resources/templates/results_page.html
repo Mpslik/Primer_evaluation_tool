@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Primer Analysis Results</title>
+    <meta charset="UTF-8">
+    <title>Primer Analysis Results</title>
+    <link rel="stylesheet" type="text/css" href="/css/styling.css">
 </head>
 <body>
-<h1>Analysis Results</h1>
-<p>Forward Primer Name: <span th:text="${analysis.forwardPrimerName}">N/A</span></p>
-<p>Forward Primer  G/C Content: <span th:text="${analysis.gcContentForwardPrimer}">0.0</span>%</p>
-<p>Forward Primer Melting Point: <span th:text="${analysis.meltingPointForwardPrimer}">0.0</span>°C</p>
-<p>Forward Primer Max Homopolymer Stretch: <span th:text="${analysis.maxHomopolymerStretchForwardPrimer}">0</span></p>
-<p>Forward Primer Max 3'-Intramolecular Identity: <span th:text="${analysis.max3IntramolecularIdentityForwardPrimer}">0</span></p>
+<div class="container">
+    <h1>Analysis Results</h1>
 
-<!-- If Primer 2 was provided, show its results -->
-<div th:if="${analysis.gcContentReversePrimer != 0}">
-    <p>Reverse Primer Name: <span th:text="${analysis.reversePrimerName}">N/A</span></p>
-    <p>Reverse Primer G/C Content: <span th:text="${analysis.gcContentReversePrimer}">0.0</span>%</p>
-    <p>Reverse Primer Melting Point: <span th:text="${analysis.meltingPointReversePrimer}">0.0</span>°C</p>
-    <p>Reverse Primer Max Homopolymer Stretch: <span th:text="${analysis.maxHomopolymerStretchReversePrimer}">0</span></p>
-    <p>Max 3'-Intermolecular Identity: <span th:text="${analysis.max3IntermolecularIdentity}">0</span></p>
-    <p>Reverse Primer Max 3'-Intramolecular Identity: <span th:text="${analysis.max3IntramolecularIdentityReversePrimer}">0</span></p>
+    <!-- Forward Primer Card -->
+    <div class="result-box">
+        <h2>Forward Primer: <span th:text="${analysis.forwardPrimerName}">Unnamed Forward</span></h2>
+        <p>G/C Content: <span th:text="${analysis.gcContentForwardPrimer}">0</span>%</p>
+        <p>Melting Point: <span th:text="${analysis.meltingPointForwardPrimer}">0</span>°C</p>
+        <p>Max Homopolymer Stretch: <span th:text="${analysis.maxHomopolymerStretchForwardPrimer}">0</span></p>
+        <p>Max 3'-Intramolecular Identity: <span th:text="${analysis.max3IntramolecularIdentityForwardPrimer}">0</span></p>
+    </div>
 
+    <!-- Reverse Primer Card - Only Display if Reverse Primer is Available -->
+    <div class="result-box" th:if="${analysis.reversePrimerName != null && !analysis.reversePrimerName.isEmpty()}">
+        <h2>Reverse Primer: <span th:text="${analysis.reversePrimerName}">Unnamed Reverse</span></h2>
+        <p>G/C Content: <span th:text="${analysis.gcContentReversePrimer}">0</span>%</p>
+        <p>Melting Point: <span th:text="${analysis.meltingPointReversePrimer}">0</span>°C</p>
+        <p>Max Homopolymer Stretch: <span th:text="${analysis.maxHomopolymerStretchReversePrimer}">0</span></p>
+        <p>Max 3'-Intermolecular Identity: <span th:text="${analysis.max3IntermolecularIdentity}">0</span></p>
+        <p>Max 3'-Intramolecular Identity: <span th:text="${analysis.max3IntramolecularIdentityReversePrimer}">0</span></p>
+    </div>
+
+    <!-- History Section -->
+    <div class="history-box">
+        <h2>History of the Last 5 Analyses</h2>
+        <ul>
+            <li th:each="item : ${history}">
+                <a th:href="@{/analysis/{id}(id=${item.id})}">
+                    Forward Primer: <span th:text="${item.forwardPrimerName}"></span>
+                    <span th:if="${item.reversePrimerName != null && !item.reversePrimerName.isEmpty()}"> | Reverse Primer: <span th:text="${item.reversePrimerName}"></span></span>
+                </a>
+            </li>
+        </ul>
+        <a href="/">Analyze another primer</a>
+    </div>
 </div>
-
-<h2>History of the Last 5 Analyses</h2>
-
-<ul>
-    <li th:each="analysis : ${history}">
-        <!-- Display Forward and Reverse primer names as clickable links -->
-        <a th:href="@{/analysis/{id}(id=${analysis.id})}">
-            Forward Primer: <span th:text="${analysis.forwardPrimerName}">Unnamed Forward</span>
-            <!-- Only show Reverse Primer name if it exists -->
-            <span th:if="${analysis.reversePrimerName != null}"> | Reverse Primer: <span th:text="${analysis.reversePrimerName}">Unnamed Reverse</span></span>
-        </a>
-    </li>
-</ul>
-
-<a href="/">Analyze another primer</a>
 </body>
 </html>

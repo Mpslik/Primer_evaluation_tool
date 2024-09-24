@@ -1,0 +1,216 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Container for central alignment */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ddd;
+}
+
+/* Heading Styles */
+h1, h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 2.4em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 1.6em;
+    margin-bottom: 15px;
+}
+
+/* Form Styles */
+form {
+    background-color: #fafafa;
+    padding: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2c3e50;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #3498db;
+}
+
+button {
+    padding: 12px 25px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+button:active {
+    background-color: #1c5f85;
+    transform: translateY(0);
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Results & History Styles */
+.result-box, .history-box {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    border: 1px solid #e0e0e0;
+}
+
+.result-box h2, .history-box h2 {
+    font-size: 1.6em;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.result-box p, .history-box p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.result-box p span, .history-box p span {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Monospace Styling for Sequence Display */
+.sequence {
+    font-family: 'Courier New', monospace;
+    background-color: #ecf0f1;
+    padding: 12px;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 1.2em;
+    color: #2c3e50;
+}
+
+.match-line {
+    font-family: 'Courier New', monospace;
+    font-size: 1.2em;
+    color: green;
+}
+
+/* History List */
+.history-box ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.history-box ul li {
+    margin-bottom: 12px;
+}
+
+.history-box ul li a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.history-box ul li a:hover {
+    text-decoration: underline;
+    color: #2980b9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.6em;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    input[type="text"] {
+        font-size: 1em;
+    }
+
+    button {
+        font-size: 1.1em;
+    }
+
+    .sequence, .match-line {
+        font-size: 1em;
+    }
+}
