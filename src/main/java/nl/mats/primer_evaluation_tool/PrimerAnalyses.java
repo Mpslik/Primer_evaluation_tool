@@ -1,9 +1,7 @@
 package nl.mats.primer_evaluation_tool;
 
 public class PrimerAnalyses {
-    private final int id;
-    private String forwardPrimer;
-    private String reversePrimer;
+    private int id;
     private String forwardPrimerName;
     private String reversePrimerName;
     private double gcContentForwardPrimer;
@@ -19,8 +17,6 @@ public class PrimerAnalyses {
     // Constructor
     public PrimerAnalyses(int id, String forwardPrimer, String reversePrimer, String forwardPrimerName, String reversePrimerName) {
         this.id = id;
-        this.forwardPrimer = forwardPrimer;
-        this.reversePrimer = reversePrimer;
         this.forwardPrimerName = forwardPrimerName;
         this.reversePrimerName = reversePrimerName;
 
@@ -134,14 +130,29 @@ public class PrimerAnalyses {
         if (primer == null || primer.isEmpty()) {
             return 0.0;  // Return 0 if the primer is empty
         }
-        return (2 * (countOccurrences(primer, 'A') + countOccurrences(primer, 'T'))) +
-                (4 * (countOccurrences(primer, 'G') + countOccurrences(primer, 'C')));
+
+        // Count occurrences of A, T, G, C in the primer
+        int countA = countOccurrences(primer, 'A');
+        int countT = countOccurrences(primer, 'T');
+        int countG = countOccurrences(primer, 'G');
+        int countC = countOccurrences(primer, 'C');
+        int totalBases = countA + countT + countG + countC;
+
+        // Sequences less than 14 nucleotides use the simpler formula
+        if (primer.length() < 14) {
+            return (countA + countT) * 2 + (countG + countC) * 4;
+        }
+        // Sequences 14 or more nucleotides use the more complex formula
+        else {
+            return 64.9 + 41 * (countG + countC - 16.4) / totalBases;
+        }
     }
 
-    private int countOccurrences(String primer, char base) {
+    // Utility method to count occurrences of a nucleotide
+    private int countOccurrences(String sequence, char base) {
         int count = 0;
-        for (char c : primer.toCharArray()) {
-            if (c == base) {
+        for (char nucleotide : sequence.toCharArray()) {
+            if (nucleotide == base) {
                 count++;
             }
         }
