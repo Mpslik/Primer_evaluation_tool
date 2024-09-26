@@ -40,6 +40,7 @@ public class PrimerAnalyses {
         }
     }
 
+    // Calculation the maximal 3' identity between the primers
     private int calculateMax3Identity(String sequence1, String sequence2) {
         int length1 = sequence1.length();
         int length2 = sequence2.length();
@@ -50,13 +51,13 @@ public class PrimerAnalyses {
             int currentIdentity = 0;
 
             for (int j = 0; j < i; j++) {
-                char baseFrom3Prime = sequence1.charAt(length1 - i + j);  // Last 'i' bases from sequence1's 3' end
-                char baseFrom5Prime = sequence2.charAt(j);                // First 'i' bases from sequence2's 5' end
+                char baseFrom3Prime = sequence1.charAt(length1 - i + j);
+                char baseFrom5Prime = sequence2.charAt(j);
 
                 if (baseFrom3Prime == baseFrom5Prime) {
                     currentIdentity++;
                 } else {
-                    break;  // Stop counting if there's a mismatch
+                    break;  // Stop if there's a mismatch
                 }
             }
 
@@ -68,7 +69,7 @@ public class PrimerAnalyses {
         return maxIdentity;
     }
 
-    // Calculate maximum 3'-intramolecular identity for a single primer
+    // Calculate maximal 3' identity for a single primer
     private int calculateMax3IntramolecularIdentity(String primer) {
         if (primer == null || primer.isEmpty()) {
             return 0;
@@ -77,7 +78,7 @@ public class PrimerAnalyses {
         // Get the reverse complement of the primer
         String reverseComplement = getReverseComplement(primer);
 
-        // Use the generic method to calculate the max identity between the primer and its reverse complement
+
         return calculateMax3Identity(primer, reverseComplement);
     }
 
