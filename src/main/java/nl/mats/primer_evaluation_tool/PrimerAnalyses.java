@@ -115,7 +115,7 @@ public class PrimerAnalyses {
 
     private double calculateGCContent(String primer) {
         if (primer == null || primer.isEmpty()) {
-            return 0.0;  // Return 0 if the primer is empty
+            return 0.0;
         }
         int gcCount = 0;
         for (char base : primer.toCharArray()) {
@@ -128,21 +128,21 @@ public class PrimerAnalyses {
 
     private double calculateMeltingPoint(String primer) {
         if (primer == null || primer.isEmpty()) {
-            return 0.0;  // Return 0 if the primer is empty
+            return 0.0;
         }
 
-        // Count occurrences of A, T, G, C in the primer
+        // Count  A, T, G, C in the primer
         int countA = countOccurrences(primer, 'A');
         int countT = countOccurrences(primer, 'T');
         int countG = countOccurrences(primer, 'G');
         int countC = countOccurrences(primer, 'C');
         int totalBases = countA + countT + countG + countC;
 
-        // Sequences less than 14 nucleotides use the simpler formula
+        // Sequences less than 14 nucleotides use simple formula
         if (primer.length() < 14) {
             return (countA + countT) * 2 + (countG + countC) * 4;
         }
-        // Sequences 14 or more nucleotides use the more complex formula
+        // Sequences 14 or more nucleotides use complex formula
         else {
             return 64.9 + 41 * (countG + countC - 16.4) / totalBases;
         }
