@@ -5,7 +5,6 @@ This tool is a web-based application designed to analyse DNA primers and Reverse
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Features](#features)
-- [Technologies Used](#technologies-used)
 - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
@@ -14,7 +13,17 @@ This tool is a web-based application designed to analyse DNA primers and Reverse
     - [Entering Primer Sequences](#entering-primer-sequences)
     - [Analysis Results](#analysis-results)
     - [History of Analyses](#history-of-analyses)
-- [Code Explanation](#code-explanation)
-- [Styling and Customization](#styling-and-customization)
 - [License](#license)
 - [Contact](#contact)
+
+## Project Overview
+
+## Features 
+
+## Getting Started
+
+## Usage
+
+##  License
+
+## Contact
