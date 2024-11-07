@@ -1,6 +1,7 @@
 package nl.mats.primer_evaluation_tool;
 
 public class PrimerAnalyses {
+    // Fields to store analysis results and primer information
     private int id;
     private String forwardPrimerName;
     private String reversePrimerName;
@@ -14,19 +15,19 @@ public class PrimerAnalyses {
     private int max3IntramolecularIdentityForwardPrimer;
     private int max3IntramolecularIdentityReversePrimer;
 
-    // Constructor
+    // Constructor initializes analysis results based on provided primers
     public PrimerAnalyses(int id, String forwardPrimer, String reversePrimer, String forwardPrimerName, String reversePrimerName) {
         this.id = id;
         this.forwardPrimerName = forwardPrimerName;
         this.reversePrimerName = reversePrimerName;
 
-        // Analyze Primer 1
+        // Analyze the forward primer
         this.gcContentForwardPrimer = calculateGCContent(forwardPrimer);
         this.meltingPointForwardPrimer = calculateMeltingPoint(forwardPrimer);
         this.maxHomopolymerStretchForwardPrimer = calculateMaxHomopolymerStretch(forwardPrimer);
         this.max3IntramolecularIdentityForwardPrimer = calculateMax3IntramolecularIdentity(forwardPrimer);
 
-        // Analyze Primer 2 if provided (not empty or null)
+        // Analyze the reverse primer if it is provided (not null or empty)
         if (reversePrimer != null && !reversePrimer.isEmpty()) {
             this.gcContentReversePrimer = calculateGCContent(reversePrimer);
             this.meltingPointReversePrimer = calculateMeltingPoint(reversePrimer);
@@ -36,16 +37,17 @@ public class PrimerAnalyses {
         }
     }
 
-    // Calculation the maximal 3' identity between the primers
+    // Calculates the maximum 3' end identity between two sequences
     private int calculateMax3Identity(String sequence1, String sequence2) {
         int length1 = sequence1.length();
         int length2 = sequence2.length();
         int maxIdentity = 0;
 
-        // Compare the last 'i' bases of sequence1 with the first 'i' bases of sequence2
+        // Compare overlapping bases at the 3' end of sequence1 and the 5' end of sequence2
         for (int i = 1; i <= Math.min(length1, length2); i++) {
             int currentIdentity = 0;
 
+            // Count matching bases in the overlap
             for (int j = 0; j < i; j++) {
                 char baseFrom3Prime = sequence1.charAt(length1 - i + j);
                 char baseFrom5Prime = sequence2.charAt(j);
@@ -53,10 +55,11 @@ public class PrimerAnalyses {
                 if (baseFrom3Prime == baseFrom5Prime) {
                     currentIdentity++;
                 } else {
-                    break;  // Stop if there's a mismatch
+                    break;  // Stop counting if there's a mismatch
                 }
             }
 
+            // Update max identity if the current overlap is greater
             if (currentIdentity > maxIdentity) {
                 maxIdentity = currentIdentity;
             }
@@ -65,7 +68,7 @@ public class PrimerAnalyses {
         return maxIdentity;
     }
 
-    // Calculate maximal 3' identity for a single primer
+    // Calculate maximal 3' intramolecular identity for a single primer
     private int calculateMax3IntramolecularIdentity(String primer) {
         if (primer == null || primer.isEmpty()) {
             return 0;
@@ -74,10 +77,11 @@ public class PrimerAnalyses {
         // Get the reverse complement of the primer
         String reverseComplement = getReverseComplement(primer);
 
-
+        // Compare the primer with its reverse complement
         return calculateMax3Identity(primer, reverseComplement);
     }
 
+    // Calculate maximal 3' intermolecular identity between forward and reverse primers
     private int calculateMax3IntermolecularIdentity(String forwardPrimer, String reversePrimer) {
         if (forwardPrimer == null || reversePrimer == null || forwardPrimer.isEmpty() || reversePrimer.isEmpty()) {
             return 0;
@@ -86,14 +90,15 @@ public class PrimerAnalyses {
         // Get the reverse complement of the reverse primer
         String reverseComplement = getReverseComplement(reversePrimer);
 
-        // Use the generic method to calculate the max identity between the forward primer and the reverse complement
+        // Compare the forward primer with the reverse complement of the reverse primer
         return calculateMax3Identity(forwardPrimer, reverseComplement);
     }
 
+    // Generate the reverse complement of a primer sequence
     private String getReverseComplement(String primer) {
         StringBuilder reverseComplement = new StringBuilder();
 
-
+        // Traverse the sequence in reverse order and get the complement of each base
         for (int i = primer.length() - 1; i >= 0; i--) {
             char base = primer.charAt(i);
             reverseComplement.append(getComplement(base));
@@ -102,17 +107,18 @@ public class PrimerAnalyses {
         return reverseComplement.toString();
     }
 
-    // Method to get the complementary base
+    // Get the complementary base for a given nucleotide
     private char getComplement(char base) {
         return switch (base) {
             case 'A' -> 'T';
             case 'T' -> 'A';
             case 'C' -> 'G';
             case 'G' -> 'C';
-            default -> base;
+            default -> base;  // Return the same character if it's not A, T, C, or G
         };
     }
 
+    // Calculate the G/C content of a primer sequence as a percentage
     private double calculateGCContent(String primer) {
         if (primer == null || primer.isEmpty()) {
             return 0.0;
@@ -126,29 +132,28 @@ public class PrimerAnalyses {
         return ((double) gcCount / primer.length()) * 100;
     }
 
+    // Calculate the melting point (Tm) of a primer sequence
     private double calculateMeltingPoint(String primer) {
         if (primer == null || primer.isEmpty()) {
             return 0.0;
         }
 
-        // Count  A, T, G, C in the primer
+        // Count occurrences of A, T, G, C in the primer
         int countA = countOccurrences(primer, 'A');
         int countT = countOccurrences(primer, 'T');
         int countG = countOccurrences(primer, 'G');
         int countC = countOccurrences(primer, 'C');
         int totalBases = countA + countT + countG + countC;
 
-        // Sequences less than 14 nucleotides use simple formula
+        // Use different formulas based on sequence length
         if (primer.length() < 14) {
             return (countA + countT) * 2 + (countG + countC) * 4;
-        }
-        // Sequences 14 or more nucleotides use complex formula
-        else {
+        } else {
             return 64.9 + 41 * (countG + countC - 16.4) / totalBases;
         }
     }
 
-    // Utility method to count occurrences of a nucleotide
+    // Utility method to count occurrences of a specific nucleotide in a sequence
     private int countOccurrences(String sequence, char base) {
         int count = 0;
         for (char nucleotide : sequence.toCharArray()) {
@@ -159,6 +164,7 @@ public class PrimerAnalyses {
         return count;
     }
 
+    // Calculate the maximum homopolymer stretch (longest run of identical bases)
     private int calculateMaxHomopolymerStretch(String primer) {
         if (primer == null || primer.isEmpty()) {
             return 0;
@@ -167,6 +173,7 @@ public class PrimerAnalyses {
         int maxStretch = 1;
         int currentStretch = 1;
 
+        // Traverse the sequence to find consecutive identical bases
         for (int i = 1; i < primer.length(); i++) {
             if (primer.charAt(i) == primer.charAt(i - 1)) {
                 currentStretch++;
@@ -174,6 +181,7 @@ public class PrimerAnalyses {
                 currentStretch = 1;
             }
 
+            // Update max stretch if the current run is longer
             if (currentStretch > maxStretch) {
                 maxStretch = currentStretch;
             }
@@ -182,7 +190,7 @@ public class PrimerAnalyses {
         return maxStretch;
     }
 
-    // Getters
+    // Getters for accessing analysis results and primer information
 
     public int getId() {
         return id;
@@ -196,7 +204,7 @@ public class PrimerAnalyses {
         return reversePrimerName;
     }
 
-    // Getters for Primer 1 results
+    // Getters for forward primer analysis results
     public double getGcContentForwardPrimer() {
         return gcContentForwardPrimer;
     }
@@ -213,7 +221,7 @@ public class PrimerAnalyses {
         return max3IntramolecularIdentityForwardPrimer;
     }
 
-    // Getters for Primer 2 results
+    // Getters for reverse primer analysis results
     public double getGcContentReversePrimer() {
         return gcContentReversePrimer;
     }
