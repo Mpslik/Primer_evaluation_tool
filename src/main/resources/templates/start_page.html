@@ -40,6 +40,7 @@
         <li><strong>3' Intermolecular Identity:</strong> Finds the largest matching segment between forward and reverse primers.</li>
         <li><strong>Analysis History:</strong> Stores and displays the last 5 primer analyses for quick reference.</li>
     </ul>
+    <p><em>Note: Both forward and reverse primers should be entered in the 5' to 3' direction.</em></p>
 </div>
 
 <!-- Display error message -->
@@ -49,14 +50,14 @@
     <label for="forwardName">Forward Primer Name:</label>
     <input type="text" id="forwardName" th:field="*{forwardPrimerName}" placeholder="Name of forward primer" required/><br>
 
-    <label for="forward">Forward Primer:</label>
+    <label for="forward">Forward Primer (5' to 3'):</label>
     <input type="text" id="forward" th:field="*{forwardPrimer}" pattern="[ATGC]*" title="Only A, T, G, C characters are allowed" required
            oninput="this.value = this.value.toUpperCase();"/><br>
 
     <label for="reverseName">Reverse Primer Name (Optional):</label>
     <input type="text" id="reverseName" th:field="*{reversePrimerName}" placeholder="Name of reverse primer"/><br>
 
-    <label for="reverse">Reverse Primer (Optional):</label>
+    <label for="reverse">Reverse Primer (5' to 3') (Optional):</label>
     <input type="text" id="reverse" th:field="*{reversePrimer}" pattern="[ATGC]*" title="Only A, T, G, C characters are allowed"
            oninput="this.value = this.value.toUpperCase();"/><br>
 
