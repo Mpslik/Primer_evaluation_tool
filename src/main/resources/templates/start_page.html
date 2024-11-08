@@ -64,8 +64,9 @@
     <button type="submit">Analyze</button>
 </form>
 
+<!-- History Section -->
 <h2>History of the Last 5 Analyses</h2>
-<div th:if="${history != null}">
+<div class="history-box" th:if="${history != null}">
     <ul>
         <li th:each="analysis : ${history}">
             <!-- Display Forward and Reverse primer names as clickable links -->
