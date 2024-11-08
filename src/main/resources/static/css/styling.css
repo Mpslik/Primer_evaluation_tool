@@ -7,22 +7,22 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f6f9;
+    background-color: #f9fafb;
     color: #333;
-    line-height: 1.6;
+    line-height: 1.7;
     padding: 20px;
     transition: all 0.3s ease-in-out;
 }
 
 /* Container for central alignment */
 .container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    border: 1px solid #ddd;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e4e7;
 }
 
 /* Heading Styles */
@@ -31,31 +31,29 @@ h1, h2, h3 {
     margin-bottom: 20px;
     font-family: 'Helvetica Neue', sans-serif;
     font-weight: bold;
-}
-
-h1 {
-    font-size: 2.4em;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 10px;
     text-align: center;
 }
 
+h1 {
+    font-size: 2.5em;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
 h2 {
-    font-size: 1.8em;
+    font-size: 2em;
     margin-bottom: 15px;
 }
 
 h3 {
     font-size: 1.6em;
-    margin-bottom: 15px;
 }
 
 /* Form Styles */
 form {
-    background-color: #fafafa;
+    background-color: #f7f9fc;
     padding: 25px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #d1dbe5;
     border-radius: 10px;
     margin-bottom: 30px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -64,14 +62,15 @@ form {
 label {
     display: block;
     font-weight: bold;
-    margin-bottom: 8px;
+    font-size: 1.1em;
     color: #2c3e50;
+    margin-bottom: 5px;
 }
 
 input[type="text"] {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #c0c4c8;
     border-radius: 4px;
     margin-bottom: 20px;
     font-size: 1.1em;
@@ -80,17 +79,24 @@ input[type="text"] {
 
 input[type="text"]:focus {
     border-color: #3498db;
+    background-color: #eef6fb;
 }
 
+/* Button Styles */
 button {
-    padding: 12px 25px;
+    padding: 12px 30px;
     background-color: #3498db;
     color: white;
     border: none;
     border-radius: 6px;
     font-size: 1.2em;
+    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto;
 }
 
 button:hover {
@@ -102,9 +108,42 @@ button:active {
     background-color: #1c5f85;
     transform: translateY(0);
 }
+/* Summary */
+.summary {
+    background-color: #e8f4fc; /* Light blue background for clarity */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #3498db; /* Blue border for accent */
+    margin-bottom: 25px;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
 
+/* Add better spacing for summary list items */
+.summary ul {
+    padding-left: 20px; /* Indent list */
+    list-style-type: disc; /* Disc style for list items */
+    margin-top: 10px;
+}
+
+.summary ul li {
+    margin-bottom: 10px; /* Space between list items */
+}
+
+/* Emphasize note text at the end of summary */
+.summary .note {
+    color: #e74c3c; /* Red color for important note */
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-top: 15px;
+    display: block;
+    text-align: center;
+}
+
+/* Error Message */
 .error-message {
-    color: red;
+    color: #e74c3c;
     font-size: 0.9em;
     margin-bottom: 15px;
     text-align: center;
@@ -112,27 +151,27 @@ button:active {
 
 /* Results & History Styles */
 .result-box, .history-box {
-    background-color: #fff;
-    padding: 25px;
+    background-color: #ffffff;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #d1dbe5;
 }
 
 .result-box h2, .history-box h2 {
-    font-size: 1.6em;
+    font-size: 1.8em;
     border-bottom: 2px solid #3498db;
-    padding-bottom: 12px;
-    margin-bottom: 20px;
+    padding-bottom: 10px;
     color: #2c3e50;
+    text-align: center;
 }
 
 .result-box p, .history-box p {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #555;
     margin-bottom: 10px;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .result-box p span, .history-box p span {
@@ -144,7 +183,7 @@ button:active {
 .sequence {
     font-family: 'Courier New', monospace;
     background-color: #ecf0f1;
-    padding: 12px;
+    padding: 10px;
     border-radius: 5px;
     display: inline-block;
     font-size: 1.2em;
@@ -172,6 +211,7 @@ button:active {
     text-decoration: none;
     color: #3498db;
     font-weight: bold;
+    font-size: 1.1em;
     transition: color 0.3s ease;
 }
 
@@ -183,11 +223,11 @@ button:active {
 /* Responsive Design */
 @media (max-width: 768px) {
     body {
-        padding: 10px;
+        padding: 15px;
     }
 
     .container {
-        padding: 15px;
+        padding: 20px;
     }
 
     h1 {
