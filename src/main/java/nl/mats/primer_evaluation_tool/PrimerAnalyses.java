@@ -2,18 +2,20 @@ package nl.mats.primer_evaluation_tool;
 
 public class PrimerAnalyses {
     // Fields to store analysis results and primer information
-    private int id;
-    private String forwardPrimerName;
-    private String reversePrimerName;
-    private double gcContentForwardPrimer;
+    private final int id;
+    private final String forwardPrimerName;
+    private final String reversePrimerName;
+    private final double gcContentForwardPrimer;
     private double gcContentReversePrimer;
-    private double meltingPointForwardPrimer;
+    private final double meltingPointForwardPrimer;
     private double meltingPointReversePrimer;
-    private int maxHomopolymerStretchForwardPrimer;
+    private final int maxHomopolymerStretchForwardPrimer;
     private int maxHomopolymerStretchReversePrimer;
     private int max3IntermolecularIdentity;
-    private int max3IntramolecularIdentityForwardPrimer;
+    private final int max3IntramolecularIdentityForwardPrimer;
     private int max3IntramolecularIdentityReversePrimer;
+    private final String coloredForwardPrimerHtml;
+    private String coloredReversePrimerHtml;
 
     // Constructor initializes analysis results based on provided primers
     public PrimerAnalyses(int id, String forwardPrimer, String reversePrimer, String forwardPrimerName, String reversePrimerName) {
@@ -27,6 +29,10 @@ public class PrimerAnalyses {
         this.maxHomopolymerStretchForwardPrimer = calculateMaxHomopolymerStretch(forwardPrimer);
         this.max3IntramolecularIdentityForwardPrimer = calculateMax3IntramolecularIdentity(forwardPrimer);
 
+        // Generate color-coded HTML representation
+        this.coloredForwardPrimerHtml = getColoredPrimerHtml(forwardPrimer);
+
+
         // Analyze the reverse primer if it is provided (not null or empty)
         if (reversePrimer != null && !reversePrimer.isEmpty()) {
             this.gcContentReversePrimer = calculateGCContent(reversePrimer);
@@ -34,6 +40,8 @@ public class PrimerAnalyses {
             this.maxHomopolymerStretchReversePrimer = calculateMaxHomopolymerStretch(reversePrimer);
             this.max3IntermolecularIdentity = calculateMax3IntermolecularIdentity(forwardPrimer, reversePrimer);
             this.max3IntramolecularIdentityReversePrimer = calculateMax3IntramolecularIdentity(reversePrimer);
+            // Generate color-coded HTML representations
+            this.coloredReversePrimerHtml = getColoredPrimerHtml(reversePrimer);
         }
     }
 
@@ -190,6 +198,34 @@ public class PrimerAnalyses {
         return maxStretch;
     }
 
+    // Set colouring for simple primer diagram
+    public String getColoredPrimerHtml(String primer) {
+        if (primer == null || primer.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder coloredHtml = new StringBuilder();
+        coloredHtml.append("5'–");
+
+        // Append each nucleotide with a color span
+        for (char nucleotide : primer.toCharArray()) {
+            String color;
+            switch (nucleotide) {
+                case 'A' -> color = "red";
+                case 'T' -> color = "blue";
+                case 'G' -> color = "green";
+                case 'C' -> color = "orange";
+                default -> color = "black";  // Default color for unexpected characters
+            }
+            coloredHtml.append("<span style=\"color:").append(color).append("\">")
+                    .append(nucleotide)
+                    .append("</span>");
+        }
+
+        coloredHtml.append("–3'");
+        return coloredHtml.toString();
+    }
+
     // Getters for accessing analysis results and primer information
 
     public int getId() {
@@ -240,5 +276,13 @@ public class PrimerAnalyses {
 
     public int getMax3IntermolecularIdentity() {
         return max3IntermolecularIdentity;
+    }
+
+    public String getColoredForwardPrimerHtml() {
+        return coloredForwardPrimerHtml;
+    }
+
+    public String getColoredReversePrimerHtml() {
+        return coloredReversePrimerHtml;
     }
 }

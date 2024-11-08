@@ -12,6 +12,7 @@
     <!-- Forward Primer Card -->
     <div class="result-box">
         <h2>Forward Primer: <span th:text="${analysis.forwardPrimerName}">Unnamed Forward</span></h2>
+        <p>Sequence: <span th:utext="${analysis.coloredForwardPrimerHtml}">5'–ACTG–3'</span></p>
         <p>G/C Content: <span th:text="${analysis.gcContentForwardPrimer}">0</span>%</p>
         <p>Melting Point: <span th:text="${analysis.meltingPointForwardPrimer}">0</span>°C</p>
         <p>Max Homopolymer Stretch: <span th:text="${analysis.maxHomopolymerStretchForwardPrimer}">0</span></p>
@@ -21,6 +22,7 @@
     <!-- Reverse Primer Card - Only Display if Reverse Primer is Available -->
     <div class="result-box" th:if="${analysis.reversePrimerName != null && !analysis.reversePrimerName.isEmpty()}">
         <h2>Reverse Primer: <span th:text="${analysis.reversePrimerName}">Unnamed Reverse</span></h2>
+        <p>Sequence: <span th:utext="${analysis.coloredReversePrimerHtml}">5'–TGCA–3'</span></p>
         <p>G/C Content: <span th:text="${analysis.gcContentReversePrimer}">0</span>%</p>
         <p>Melting Point: <span th:text="${analysis.meltingPointReversePrimer}">0</span>°C</p>
         <p>Max Homopolymer Stretch: <span th:text="${analysis.maxHomopolymerStretchReversePrimer}">0</span></p>
