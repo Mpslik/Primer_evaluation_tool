@@ -1,12 +1,23 @@
 package nl.mats.primer_evaluation_tool;
 
+/**
+ * Represents a primer object containing information about forward and reverse primers.
+ */
 public class PrimerObject {
+
+    /** The forward primer sequence. */
     private String forwardPrimer;
+
+    /** The reverse primer sequence. */
     private String reversePrimer;
+
+    /** The name of the forward primer. */
     private String forwardPrimerName;
+
+    /** The name of the reverse primer. */
     private String reversePrimerName;
 
-    // Constructor
+    // Constructors
     public PrimerObject() {
     }
 
@@ -17,7 +28,18 @@ public class PrimerObject {
         this.reversePrimerName = reversePrimer;
     }
 
-    // Getters and setters
+    /**
+     * Validates if the given primer sequence contains only valid nucleotide characters (A, T, C, G).
+     *
+     * @param primer The primer sequence to validate.
+     * @return {@code true} if the primer sequence is valid; {@code false} otherwise.
+     */
+    public boolean isValidPrimer(String primer) {
+        return primer.matches("[ATCGatcg]+");
+    }
+
+    // Getters and setters without Javadoc
+
     public String getForwardPrimer() {
         return forwardPrimer;
     }
@@ -48,11 +70,6 @@ public class PrimerObject {
 
     public void setReversePrimerName(String reversePrimerName) {
         this.reversePrimerName = reversePrimerName;
-    }
-
-    // Valid primer check
-    public boolean isValidPrimer(String primer) {
-        return primer.matches("[ATCGatcg]+");
     }
 
     @Override
