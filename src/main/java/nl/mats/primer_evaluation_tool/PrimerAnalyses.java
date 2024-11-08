@@ -1,29 +1,48 @@
 package nl.mats.primer_evaluation_tool;
 
+/**
+ * PrimerAnalyses class performs analysis on primer sequences, including calculating
+ * GC content, melting point, homopolymer stretch, and intermolecular/intramolecular identities.
+ * It generates HTML for color-coded primer visualization and stores analysis results.
+ */
 public class PrimerAnalyses {
-    // Fields to store analysis results and primer information
+    // Unique identifier for each analysis
     private final int id;
+
+    // Primer names
     private final String forwardPrimerName;
     private final String reversePrimerName;
+
+    // Analysis results for the forward primer
     private final double gcContentForwardPrimer;
-    private double gcContentReversePrimer;
     private final double meltingPointForwardPrimer;
-    private double meltingPointReversePrimer;
     private final int maxHomopolymerStretchForwardPrimer;
-    private int maxHomopolymerStretchReversePrimer;
-    private int max3IntermolecularIdentity;
     private final int max3IntramolecularIdentityForwardPrimer;
-    private int max3IntramolecularIdentityReversePrimer;
     private final String coloredForwardPrimerHtml;
+
+    // Analysis results for the reverse primer (if provided)
+    private double gcContentReversePrimer;
+    private double meltingPointReversePrimer;
+    private int maxHomopolymerStretchReversePrimer;
+    private int max3IntramolecularIdentityReversePrimer;
+    private int max3IntermolecularIdentity;
     private String coloredReversePrimerHtml;
 
-    // Constructor initializes analysis results based on provided primers
+    /**
+     * Constructs a PrimerAnalyses instance and performs analysis on the given primers.
+     *
+     * @param id               The unique ID for this analysis.
+     * @param forwardPrimer    The forward primer sequence.
+     * @param reversePrimer    The reverse primer sequence (optional).
+     * @param forwardPrimerName The name of the forward primer.
+     * @param reversePrimerName The name of the reverse primer.
+     */
     public PrimerAnalyses(int id, String forwardPrimer, String reversePrimer, String forwardPrimerName, String reversePrimerName) {
         this.id = id;
         this.forwardPrimerName = forwardPrimerName;
         this.reversePrimerName = reversePrimerName;
 
-        // Analyze the forward primer
+        // Perform analysis on the forward primer
         this.gcContentForwardPrimer = calculateGCContent(forwardPrimer);
         this.meltingPointForwardPrimer = calculateMeltingPoint(forwardPrimer);
         this.maxHomopolymerStretchForwardPrimer = calculateMaxHomopolymerStretch(forwardPrimer);
@@ -45,7 +64,13 @@ public class PrimerAnalyses {
         }
     }
 
-    // Calculates the maximum 3' end identity between two sequences
+    /**
+     * Calculates the maximum 3' end identity between two primer sequences.
+     *
+     * @param sequence1 The first primer sequence.
+     * @param sequence2 The second primer sequence.
+     * @return The maximum identity at the 3' end overlap.
+     */
     private int calculateMax3Identity(String sequence1, String sequence2) {
         int length1 = sequence1.length();
         int length2 = sequence2.length();
@@ -76,7 +101,12 @@ public class PrimerAnalyses {
         return maxIdentity;
     }
 
-    // Calculate maximal 3' intramolecular identity for a single primer
+    /**
+     * Calculates the maximum 3' intramolecular identity within a single primer sequence.
+     *
+     * @param primer The primer sequence.
+     * @return The maximum intramolecular identity.
+     */
     private int calculateMax3IntramolecularIdentity(String primer) {
         if (primer == null || primer.isEmpty()) {
             return 0;
@@ -89,7 +119,13 @@ public class PrimerAnalyses {
         return calculateMax3Identity(primer, reverseComplement);
     }
 
-    // Calculate maximal 3' intermolecular identity between forward and reverse primers
+    /**
+     * Calculates the maximum 3' intermolecular identity between the forward and reverse primers.
+     *
+     * @param forwardPrimer The forward primer sequence.
+     * @param reversePrimer The reverse primer sequence.
+     * @return The maximum intermolecular identity.
+     */
     private int calculateMax3IntermolecularIdentity(String forwardPrimer, String reversePrimer) {
         if (forwardPrimer == null || reversePrimer == null || forwardPrimer.isEmpty() || reversePrimer.isEmpty()) {
             return 0;
@@ -102,7 +138,12 @@ public class PrimerAnalyses {
         return calculateMax3Identity(forwardPrimer, reverseComplement);
     }
 
-    // Generate the reverse complement of a primer sequence
+    /**
+     * Generates the reverse complement of a primer sequence.
+     *
+     * @param primer The primer sequence.
+     * @return The reverse complement of the primer.
+     */
     private String getReverseComplement(String primer) {
         StringBuilder reverseComplement = new StringBuilder();
 
@@ -111,11 +152,15 @@ public class PrimerAnalyses {
             char base = primer.charAt(i);
             reverseComplement.append(getComplement(base));
         }
-
         return reverseComplement.toString();
     }
 
-    // Get the complementary base for a given nucleotide
+    /**
+     * Returns the complementary base for a given nucleotide.
+     *
+     * @param base The nucleotide base (A, T, C, G).
+     * @return The complementary base.
+     */
     private char getComplement(char base) {
         return switch (base) {
             case 'A' -> 'T';
@@ -126,21 +171,29 @@ public class PrimerAnalyses {
         };
     }
 
-    // Calculate the G/C content of a primer sequence as a percentage
+    /**
+     * Calculates the GC content of a primer sequence.
+     *
+     * @param primer The primer sequence.
+     * @return The GC content as a percentage.
+     */
     private double calculateGCContent(String primer) {
         if (primer == null || primer.isEmpty()) {
             return 0.0;
         }
         int gcCount = 0;
         for (char base : primer.toCharArray()) {
-            if (base == 'G' || base == 'C') {
-                gcCount++;
-            }
+            if (base == 'G' || base == 'C') gcCount++;
         }
         return ((double) gcCount / primer.length()) * 100;
     }
 
-    // Calculate the melting point (Tm) of a primer sequence
+    /**
+     * Calculates the melting point (Tm) of a primer sequence based on nucleotide content.
+     *
+     * @param primer The primer sequence.
+     * @return The calculated melting point.
+     */
     private double calculateMeltingPoint(String primer) {
         if (primer == null || primer.isEmpty()) {
             return 0.0;
@@ -161,18 +214,27 @@ public class PrimerAnalyses {
         }
     }
 
-    // Utility method to count occurrences of a specific nucleotide in a sequence
+    /**
+     * Counts occurrences of a specific nucleotide in a sequence.
+     *
+     * @param sequence The nucleotide sequence.
+     * @param base     The nucleotide to count.
+     * @return The number of occurrences of the nucleotide.
+     */
     private int countOccurrences(String sequence, char base) {
         int count = 0;
         for (char nucleotide : sequence.toCharArray()) {
-            if (nucleotide == base) {
-                count++;
-            }
+            if (nucleotide == base) count++;
         }
         return count;
     }
 
-    // Calculate the maximum homopolymer stretch (longest run of identical bases)
+    /**
+     * Calculates the longest stretch of identical consecutive bases in a primer.
+     *
+     * @param primer The primer sequence.
+     * @return The maximum homopolymer stretch.
+     */
     private int calculateMaxHomopolymerStretch(String primer) {
         if (primer == null || primer.isEmpty()) {
             return 0;
@@ -194,40 +256,36 @@ public class PrimerAnalyses {
                 maxStretch = currentStretch;
             }
         }
-
         return maxStretch;
     }
 
-    // Set colouring for simple primer diagram
+    /**
+     * Generates HTML for color-coding a primer sequence by nucleotide.
+     *
+     * @param primer The primer sequence.
+     * @return An HTML string with colored nucleotides.
+     */
     public String getColoredPrimerHtml(String primer) {
-        if (primer == null || primer.isEmpty()) {
-            return "";
-        }
+        if (primer == null || primer.isEmpty()) return "";
 
         StringBuilder coloredHtml = new StringBuilder();
         coloredHtml.append("5'–");
 
         // Append each nucleotide with a color span
         for (char nucleotide : primer.toCharArray()) {
-            String color;
-            switch (nucleotide) {
-                case 'A' -> color = "red";
-                case 'T' -> color = "blue";
-                case 'G' -> color = "green";
-                case 'C' -> color = "orange";
-                default -> color = "black";  // Default color for unexpected characters
-            }
-            coloredHtml.append("<span style=\"color:").append(color).append("\">")
-                    .append(nucleotide)
-                    .append("</span>");
+            String color = switch (nucleotide) {
+                case 'A' -> "red";
+                case 'T' -> "blue";
+                case 'G' -> "green";
+                case 'C' -> "orange";
+                default -> "black";
+            };
+            coloredHtml.append("<span style=\"color:").append(color).append("\">").append(nucleotide).append("</span>");
         }
-
-        coloredHtml.append("–3'");
-        return coloredHtml.toString();
+        return coloredHtml.append("–3'").toString();
     }
 
     // Getters for accessing analysis results and primer information
-
     public int getId() {
         return id;
     }
