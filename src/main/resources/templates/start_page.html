@@ -25,17 +25,18 @@
     </script>
 </head>
 <body>
-<h1>Enter Primer Sequences</h1>
+<h1>Primer analyses web tool</h1>
 
 <!-- Project Summary -->
 <div class="summary">
     <p>
         <strong>Primer Analysis and Evaluation Tool</strong> is a web-based application designed for analyzing DNA primers. This tool provides key properties of your primers, such as G/C content, melting point, and checks for homopolymer stretches. It's ideal for researchers needing a quick analysis for PCR and DNA amplification experiments.
+        To see if the primers are properly selected and won't bind to themselves or each other
     </p>
     <ul>
         <li><strong>Analyze Primer Properties:</strong> Quickly view G/C content, melting point, and homopolymer stretches.</li>
-        <li><strong>3' Intramolecular Identity:</strong> Compares the 3' end of a primer with its reverse complement.</li>
-        <li><strong>3' Intermolecular Identity:</strong> Finds the largest matching segment between forward and reverse primers.</li>
+        <li><strong>3' Intramolecular Identity:</strong> Compares the 3' end of the primer with its own reverse. </li>
+        <li><strong>3' Intermolecular Identity:</strong> Finds the largest complementary segment between forward and reverse primers.</li>
         <li><strong>Analysis History:</strong> Stores and displays the last 5 primer analyses for quick reference.</li>
     </ul>
     <p class="note">
@@ -45,7 +46,7 @@
 
 <!-- Display error message -->
 <p id="error-message" style="color: red;"></p>
-
+<h2>Enter Primer sequence(s)</h2>
 <form action="#" th:action="@{/analyze}" th:object="${primerForm}" method="post">
     <label for="forwardName">Forward Primer Name:</label>
     <input type="text" id="forwardName" th:field="*{forwardPrimerName}" placeholder="Name of forward primer" required/><br>
