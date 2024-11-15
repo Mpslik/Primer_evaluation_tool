@@ -57,13 +57,13 @@ public class Controller {
         String reversePrimerName = primerObject.getReversePrimerName();
 
         // Validate the forward primer sequence
-        if (!primerObject.isValidPrimer(forwardPrimer)) {
+        if (primerObject.isValidPrimer(forwardPrimer)) {
             model.addAttribute("error", "Invalid forward primer sequence. Only A, T, G, C, U characters are allowed.");
             return "start_page"; // Returns to the input form with an error message
         }
 
         // Validate the reverse primer
-        if (reversePrimer != null && !reversePrimer.isEmpty() && !primerObject.isValidPrimer(reversePrimer)) {
+        if (reversePrimer != null && !reversePrimer.isEmpty() && primerObject.isValidPrimer(reversePrimer)) {
             model.addAttribute("error", "Invalid reverse primer sequence. Only A, T, G, C, U characters are allowed.");
             return "start_page"; // Returns to the input form with an error message
         }

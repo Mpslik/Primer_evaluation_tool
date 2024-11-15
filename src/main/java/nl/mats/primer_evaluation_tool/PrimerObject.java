@@ -35,7 +35,7 @@ public class PrimerObject {
      * @return {@code true} if the primer sequence is valid; {@code false} otherwise.
      */
     public boolean isValidPrimer(String primer) {
-        return primer.matches("[ATCGatcg]+");
+        return !primer.matches("[ATCGatcg]+");
     }
 
     // Getters and setters without Javadoc

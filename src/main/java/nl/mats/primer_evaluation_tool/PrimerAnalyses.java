@@ -14,6 +14,7 @@ public class PrimerAnalyses {
     private final String reversePrimerName;
 
     // Analysis results for the forward primer
+    private final int forwardPrimerLength;
     private final double gcContentForwardPrimer;
     private final double meltingPointForwardPrimer;
     private final int maxHomopolymerStretchForwardPrimer;
@@ -21,6 +22,7 @@ public class PrimerAnalyses {
     private final String coloredForwardPrimerHtml;
 
     // Analysis results for the reverse primer (if provided)
+    private int reversePrimerLength;
     private double gcContentReversePrimer;
     private double meltingPointReversePrimer;
     private int maxHomopolymerStretchReversePrimer;
@@ -47,6 +49,7 @@ public class PrimerAnalyses {
         this.meltingPointForwardPrimer = calculateMeltingPoint(forwardPrimer);
         this.maxHomopolymerStretchForwardPrimer = calculateMaxHomopolymerStretch(forwardPrimer);
         this.max3IntramolecularIdentityForwardPrimer = calculateMax3IntramolecularIdentity(forwardPrimer);
+        this.forwardPrimerLength = forwardPrimer.length();
 
         // Generate color-coded HTML representation
         this.coloredForwardPrimerHtml = getColoredPrimerHtml(forwardPrimer);
@@ -59,6 +62,7 @@ public class PrimerAnalyses {
             this.maxHomopolymerStretchReversePrimer = calculateMaxHomopolymerStretch(reversePrimer);
             this.max3IntermolecularIdentity = calculateMax3IntermolecularIdentity(forwardPrimer, reversePrimer);
             this.max3IntramolecularIdentityReversePrimer = calculateMax3IntramolecularIdentity(reversePrimer);
+            this.reversePrimerLength = reversePrimer.length();
             // Generate color-coded HTML representations
             this.coloredReversePrimerHtml = getColoredPrimerHtml(reversePrimer);
         }
@@ -114,7 +118,8 @@ public class PrimerAnalyses {
 
         // Get the reverse complement of the primer
         String reverseComplement = getReverseComplement(primer);
-
+        System.out.println(primer);
+        System.out.println(reverseComplement);
         // Compare the primer with its reverse complement
         return calculateMax3Identity(primer, reverseComplement);
     }
@@ -185,7 +190,10 @@ public class PrimerAnalyses {
         for (char base : primer.toCharArray()) {
             if (base == 'G' || base == 'C') gcCount++;
         }
-        return ((double) gcCount / primer.length()) * 100;
+
+        double gcContent = ((double) gcCount / primer.length()) * 100;
+
+        return Math.round(gcContent *100.0) / 100.0; // Rounding percentage to 2 decimals
     }
 
     /**
@@ -260,29 +268,38 @@ public class PrimerAnalyses {
     }
 
     /**
-     * Generates HTML for color-coding a primer sequence by nucleotide.
+     * Generates an HTML representation of a primer with color-coded bases, followed by its length.
      *
-     * @param primer The primer sequence.
-     * @return An HTML string with colored nucleotides.
+     * @param primer the primer sequence to colorize.
+     * @return an HTML string showing the color-coded primer followed by its length.
      */
     public String getColoredPrimerHtml(String primer) {
-        if (primer == null || primer.isEmpty()) return "";
+        if (primer == null || primer.isEmpty()) {
+            return "";
+        }
 
         StringBuilder coloredHtml = new StringBuilder();
         coloredHtml.append("5'–");
 
         // Append each nucleotide with a color span
         for (char nucleotide : primer.toCharArray()) {
-            String color = switch (nucleotide) {
-                case 'A' -> "red";
-                case 'T' -> "blue";
-                case 'G' -> "green";
-                case 'C' -> "orange";
-                default -> "black";
-            };
-            coloredHtml.append("<span style=\"color:").append(color).append("\">").append(nucleotide).append("</span>");
+            String color;
+            switch (nucleotide) {
+                case 'A' -> color = "red";
+                case 'T' -> color = "blue";
+                case 'G' -> color = "green";
+                case 'C' -> color = "orange";
+                default -> color = "black";  // Default color for unexpected characters
+            }
+            coloredHtml.append("<span style=\"color:").append(color).append("\">")
+                    .append(nucleotide)
+                    .append("</span>");
         }
-        return coloredHtml.append("–3'").toString();
+
+        coloredHtml.append("–3'");
+        coloredHtml.append(" (Length: ").append(primer.length()).append(")"); // Append primer length
+
+        return coloredHtml.toString();
     }
 
     // Getters for accessing analysis results and primer information
